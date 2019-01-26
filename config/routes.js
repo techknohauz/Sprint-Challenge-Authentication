@@ -1,10 +1,12 @@
 const axios = require('axios');
+const db = require('../database/usersModel');
 
 const { authenticate } = require('../auth/authenticate');
+const { passwordProtection } = require('../middleware/middleware');
 
 module.exports = server => {
-  server.post('/api/register', register);
-  server.post('/api/login', login);
+  server.post('/api/register', checkFields, register);
+  server.post('/api/login', loginCheck, login);
   server.get('/api/jokes', authenticate, getJokes);
   server.get('/api', home);
 };
@@ -13,8 +15,20 @@ function home(req,res){
   res.send('Welcome!')
 }
 
-function register(req, res) {
+function register(req, res) {  
   // implement user registration
+  const user = req.body;
+  user.password = passwordProtection(user.password);
+  db.add(user)
+    .then(response => {
+      res.status(201).json({ message: 
+        "Account created successfully!"})
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Unable to add new account"
+      })
+    })
 }
 
 function login(req, res) {
