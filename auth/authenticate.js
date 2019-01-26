@@ -6,8 +6,20 @@ const jwtKey =
 
 // quickly see what this file exports
 module.exports = {
-  authenticate,
+  authenticate, generateToken
 };
+
+function generateToken(username, id){
+  const payload = {
+    username: username,
+    sub: `${id}`
+  }
+  const options = {
+    expiresIn: '1h'
+  }
+
+   return jwt.sign(payload, jwtKey, options);
+}
 
 // implementation details
 function authenticate(req, res, next) {

@@ -1,19 +1,15 @@
 const axios = require('axios');
 const db = require('../database/usersModel');
+const bcrypt = require('bcryptjs');
 
-const { authenticate } = require('../auth/authenticate');
-const { passwordProtection } = require('../middleware/middleware');
+const { authenticate, generateToken } = require('../auth/authenticate');
+const { passwordProtection, checkFields, loginCheck } = require('../middleware/middleware');
 
 module.exports = server => {
   server.post('/api/register', checkFields, register);
-  server.post('/api/login', loginCheck, login);
-  server.get('/api/jokes', authenticate, getJokes);
+  server.post('/api/login', loginCheck, login);  
   server.get('/api', home);
 };
-
-function home(req,res){
-  res.send('Welcome!')
-}
 
 function register(req, res) {  
   // implement user registration
@@ -32,7 +28,26 @@ function register(req, res) {
 }
 
 function login(req, res) {
-  // implement user login
+  const loginUser = req.body;
+  db.login(loginUser.username)
+    .then(response => {
+      if(bcrypt.compareSync(loginUser.password, response.password) === true ){
+        const token = generateToken(response.username, response.id);
+        res.status(200).json({
+          message: 'Login successful!',
+          token: token
+        })
+      } else {
+        res.status(404).json({
+          message: "Invalid username or password"
+        })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: 'Unable to login.'
+      })
+    })
 }
 
 function getJokes(req, res) {
