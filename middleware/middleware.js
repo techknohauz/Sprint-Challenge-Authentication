@@ -1,6 +1,7 @@
+
 const bcrypt = require('bcryptjs');
 
- passwordProtection = (password) => {
+passwordProtection = (password) => {
     if(password.length > 11){
         hashed = bcrypt.hashSync(password, 12);
         return hashed;
@@ -11,7 +12,7 @@ const bcrypt = require('bcryptjs');
     }
 }
 
- checkFields = (req, res, next) => {
+checkFields = (req, res, next) => {
     const user = req.body;
     if(user.username && user.password){
         next();
@@ -30,7 +31,7 @@ const bcrypt = require('bcryptjs');
     }
 }
 
- loginCheck = (req, res, next) => {
+loginCheck = (req, res, next) => {
     const user = req.body;
     if(user.username && user.password){
         next();
@@ -41,6 +42,6 @@ const bcrypt = require('bcryptjs');
     }
 }
 
- module.exports = {
+module.exports = {
     passwordProtection, checkFields, loginCheck
-} 
+}
