@@ -19,7 +19,7 @@ class Register extends React.Component {
 
     register = (e) => {
         e.preventDefault();
-        const endpoint = 'http://localhost:3300/api/register';
+        const endpoint = 'http://localhost:9500/api/register';
         const newUser = {
             username: this.state.username,
             password: this.state.password
