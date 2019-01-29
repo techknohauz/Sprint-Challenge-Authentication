@@ -2,7 +2,7 @@ const dbConfig = require('../knexfile.js');
 const knex = require('knex');
 const db = knex(dbConfig.development);
 
- add = (user) => {
+add = (user) => {
     return db('users').insert(user)
 }
 
@@ -12,6 +12,7 @@ login = (username) => {
         .first();
 }
 
- module.exports = {
+
+module.exports = {
     add, login
-} 
+}

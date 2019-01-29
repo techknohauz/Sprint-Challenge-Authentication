@@ -1,6 +1,7 @@
 import React from 'react';
 import '../App.css';
 import axios from 'axios';
+import { OuterBox, Button } from './styledComponents';
 
 class Login extends React.Component {
     constructor(props){
@@ -38,7 +39,7 @@ class Login extends React.Component {
 
     render(){
         return(
-            <div>
+            <OuterBox>
                 <h1>Login to Dad Jokes!</h1>
 
                 <form onSubmit={this.login}>
@@ -65,10 +66,10 @@ class Login extends React.Component {
                     </div>
 
                     <div className="button">
-                        <button type="submit">Login</button>
+                        <Button type="submit">Login</Button>
                     </div>
                 </form>
-            </div>
+            </OuterBox>
         )
     }
 }

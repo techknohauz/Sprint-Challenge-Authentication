@@ -7,12 +7,11 @@ const { passwordProtection, checkFields, loginCheck } = require('../middleware/m
 
 module.exports = server => {
   server.post('/api/register', checkFields, register);
-  server.post('/api/login', loginCheck, login);  
-  server.get('/api', home);
+  server.post('/api/login', loginCheck, login);
+  server.get('/api/jokes', authenticate, getJokes);
 };
 
-function register(req, res) {  
-  // implement user registration
+function register(req, res) {
   const user = req.body;
   user.password = passwordProtection(user.password);
   db.add(user)
