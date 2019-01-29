@@ -1,6 +1,7 @@
 import React from 'react';
 import '../App.css';
 import axios from 'axios';
+import { OuterBox, Button } from './styledComponents';
 
 class Register extends React.Component {
     constructor(props){
@@ -18,7 +19,7 @@ class Register extends React.Component {
 
     register = (e) => {
         e.preventDefault();
-        const endpoint = 'http://localhost:9500/api/register';
+        const endpoint = 'http://localhost:3300/api/register';
         const newUser = {
             username: this.state.username,
             password: this.state.password
@@ -37,7 +38,7 @@ class Register extends React.Component {
 
     render(){
         return(
-            <div>
+            <OuterBox>
                 <h1>Register for Dad Jokes!</h1>
 
                 <form onSubmit={this.register}>
@@ -64,10 +65,10 @@ class Register extends React.Component {
                     </div>
 
                     <div className="button">
-                        <button type="submit">Submit</button>
+                        <Button type="submit">Submit</Button>
                     </div>
                 </form>
-            </div>
+            </OuterBox>
         )
     }
 }
